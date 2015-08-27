@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='redditApp' >
+<head>
+  <meta charset="UTF-8">
+  <title>Reddit thing</title>
+  <script src= "https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src = 'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular.js'></script>
+<script src = 'https://ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-animate.js'></script><script src = 'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-sanitize.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
+<script src = './../../js/app.js'></script>
+<script src = './../../js/controllers.js'></script>
+
+<script></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./../../style.css">
+</head>
+<body ng-controller="OneControllerToRuleThemAll">
+  <nav class='navTop'>
+    <h1 class='topTitle'><span class="uptootTitleStyle"> UpToot</span> | <span class="downSnootTitleStyle">DownSnoot</span> </h1>
+    <button class="submitPost" ng-click="showme=true"> +
+    </button>
+    <br>
+    <label>Search<input class='searchBar' type="text" ng-model='query' placeholder="Search for stuff here!"/></label>
+<!--     <label>
+  Sort By
+  <select class='sortbyDropdown'>
+    <option value="votes">Votes</option>
+    <option value="dates">Date</option>
+    <option value="title">Title</option>
+  </select>
+</label> -->
+  </nav>
+
+<article class="posts" ng-repeat="post in Posts | orderBy:'-upTootCount' | filter:query" >
+  <h3 class = 'postTitle'>{{post.title}} |</h3>
+  <h3 class="upToots shadowUpToot" ng-click='upToot(post)'>⬆</h3>
+  <h3 class="downSnoots shadowDownSnoot" ng-click='downToot(post)'>⬇</h3>
+  <h3 class='uptootCounter' ng-class='{winGreen : post.upTootCount>0, looseRed : post.upTootCount<0}'>{{post.upTootCount}}</h3>
+
+  <br>
+   <h3 class="postAuthor">By {{post.PostAuthor}}</h3>
+   <br>
+  <br>
+  <img src= "{{post.imgURL}}" alt="Post image" class="postImage">
+  <p class = 'postText'>{{post.postText}}</p>
+  <br>
+  <br>
+
+<!--    <footer class='postInfoFooter'>
+  <button class='footerButton' ng-controller='timeAppController as main'>
+    <i class="fa fa-calendar"></i> This was posted <time am-time-ago='main.timeOne' | amCalendar></time>
+  </button> -->
+
+<!--  |    <button class='footerButton'>
+ <i class="fa fa-comment"></i> {{commentCount}} comments
+    </button>
+    |
+    <button class='footerButton'>
+ <i class="fa fa-pencil"></i> add comment
+    </button> -->
+   </footer>
+</article>
+
+<form name='form' class = 'newPostOverlay' ng-show="showme">
+  <h3 class='submitNewPostTitle'>Submit a new post!</h3>
+  <h3 class="errorFillTheBlanks" ng-show='allForms'>All fields must be filled out</h3>
+  <button class="closeWindow" ng-click="showme=false" ><i class="fa fa-times-circle"></i></button>
+  <label class = 'newPostInputs' >Title <br> <input name='title' ng-model='PostTitle' class="InputTextFieldNewPost" type="text"></label>
+  <label class = 'newPostInputs' >Image Url <br><input name='imgurl' ng-model='PostImageURL'  class="InputTextFieldNewPost" type="text"></label>
+  <label class = 'newPostInputs' >Text <br><input name='text' ng-model='PostText' class="InputTextFieldNewPost" type="text"></label>
+  <label class = 'newPostInputs' >Author <br><input name='author' ng-model='PostAuthor'  class="InputTextFieldNewPost" type="text"></label>
+  <button class = 'newPostSubmitButton' ng-click='submitPost()' >Submit</button>
+</form>
+</body>
+
+<!-- Firebase -->
+<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+<!-- AngularFire -->
+<script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
+</html>
